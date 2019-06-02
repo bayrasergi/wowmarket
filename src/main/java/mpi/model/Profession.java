@@ -1,5 +1,6 @@
 package mpi.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,12 +14,13 @@ import javax.persistence.*;
 @Table(name = "profession")
 public class Profession {
     @Id
-    @GeneratedValue
-    @Column(name = "profession_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "profession_id", columnDefinition = "serial")
+    @JsonValue
     private int id;
 
     @Column
-    private int name;
+    private String name;
 
     @Column
     private boolean craft;

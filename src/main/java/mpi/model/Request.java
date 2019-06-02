@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Table(name = "`request`")
 public class Request {
     @Id
-    @GeneratedValue
-    @Column(name = "request_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "request_id", columnDefinition = "serial")
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,8 +32,15 @@ public class Request {
     @JoinColumn(name = "seller_user_id")
     private User sellerUser;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lot_id")
+    private Lot lot;
+
     @Column
     private int count;
+
+    @Column
+    private String status;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_request_id")

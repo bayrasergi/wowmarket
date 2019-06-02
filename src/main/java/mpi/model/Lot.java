@@ -13,8 +13,8 @@ import javax.persistence.*;
 @Table(name = "lot")
 public class Lot {
     @Id
-    @GeneratedValue
-    @Column(name = "lot_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "lot_id", columnDefinition = "serial")
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,4 +27,10 @@ public class Lot {
 
     @Column
     private int count;
+
+    @Column
+    private int price;
+
+    @Column
+    private String comment;
 }

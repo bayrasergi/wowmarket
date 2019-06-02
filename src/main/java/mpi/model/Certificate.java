@@ -10,11 +10,11 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "sertificate")
-public class Sertificate {
+@Table(name = "certificate")
+public class Certificate {
     @Id
-    @GeneratedValue
-    @Column(name = "sertificate_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "certificate_id", columnDefinition = "serial")
     private int id;
 
     @ManyToOne

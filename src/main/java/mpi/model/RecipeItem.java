@@ -13,8 +13,8 @@ import javax.persistence.*;
 @Table(name = "recipe_item")
 public class RecipeItem {
     @Id
-    @GeneratedValue
-    @Column(name = "recipe_item_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "recipe_item_id", columnDefinition = "serial")
     private int id;
 
     @ManyToOne

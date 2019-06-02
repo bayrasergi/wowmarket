@@ -14,8 +14,8 @@ import java.util.List;
 @Table(name = "recipe")
 public class Recipe {
     @Id
-    @GeneratedValue
-    @Column(name = "recipe_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "recipe_id", columnDefinition = "serial")
     private int id;
 
     @OneToMany(fetch = FetchType.LAZY)
