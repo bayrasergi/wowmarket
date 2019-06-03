@@ -1,7 +1,6 @@
 package mpi.controller;
 
 import lombok.AllArgsConstructor;
-import mpi.model.Item;
 import mpi.model.Request;
 import mpi.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +9,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/request")
+@RequestMapping("/requests")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class RequestController {
 
     private RequestService requestService;
+
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity<List<Request>> getAllRequests() {
+        return ResponseEntity.ok(requestService.getAllRequests());
+    }
 
     @PostMapping
     @ResponseBody
@@ -25,12 +29,12 @@ public class RequestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(requestService.createRequest(request));
     }
 
-    @PutMapping("/{requestId}")
+    @PutMapping("/{requestId}/user/{userId}")
     @ResponseBody
     public ResponseEntity<Request> acceptRequest(@PathVariable("requestId") int requestId,
-                                                 int userId,
-                                                 @RequestBody List<Item> requestedItems) {
-        return ResponseEntity.ok(requestService.acceptRequest(requestId, userId, requestedItems));
+                                                 @PathVariable("userId") int userId,
+                                                 @RequestBody List<Integer> requestedItemsIds) {
+        return ResponseEntity.ok(requestService.acceptRequest(requestId, userId, requestedItemsIds));
     }
 
     @DeleteMapping("/{requestId}")
@@ -39,9 +43,9 @@ public class RequestController {
         return ResponseEntity.ok(requestService.closeRequest(requestId));
     }
 
-    @PatchMapping("/{requestId}")
+    @PutMapping("/{requestId}/price/{price}")
     @ResponseBody
-    public ResponseEntity<Request> completeRequest(@PathVariable("requestId") int requestId, int price) {
+    public ResponseEntity<Request> completeRequest(@PathVariable("requestId") int requestId, @PathVariable("price") int price) {
         return ResponseEntity.ok(requestService.completeRequest(requestId, price));
     }
 }

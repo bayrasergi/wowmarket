@@ -17,11 +17,11 @@ public class Lot {
     @Column(name = "lot_id", columnDefinition = "serial")
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "seller_user_id")
     private User sellerUser;
 

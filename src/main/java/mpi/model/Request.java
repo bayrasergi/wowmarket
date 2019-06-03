@@ -1,12 +1,12 @@
 package mpi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Getter
@@ -20,19 +20,20 @@ public class Request {
     @Column(name = "request_id", columnDefinition = "serial")
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "requested_item_id")
     private Item requestedItem;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+
     @JoinColumn(name = "buyer_user_id")
     private User buyerUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "seller_user_id")
     private User sellerUser;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "lot_id")
     private Lot lot;
 
@@ -42,18 +43,12 @@ public class Request {
     @Column
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_request_id")
     private Request parentRequest;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentRequest")
+    @JsonIgnore
     private List<Request> childrenRequests;
 
-    @Override
-    public String toString() {
-        return String.format("id=%d;requested=%s;children=[%s]",
-                id,
-                "asd",
-                childrenRequests.stream().map(c -> Integer.toString(c.id)).collect(Collectors.joining(",")));
-    }
 }

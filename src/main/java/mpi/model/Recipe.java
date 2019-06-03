@@ -18,7 +18,7 @@ public class Recipe {
     @Column(name = "recipe_id", columnDefinition = "serial")
     private int id;
 
-    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "recipe")
     private List<RecipeItem> requiredItems;
 
     @ManyToOne

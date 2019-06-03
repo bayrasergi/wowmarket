@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -28,11 +27,21 @@ public class RequestService {
     }
 
     public Request createRequest(Request request) {
+        Optional<User> optionalUser = userRepository.findById(request.getBuyerUser().getId());
+        if (!optionalUser.isPresent()) {
+            return null;
+        }
+        request.setBuyerUser(optionalUser.get());
+        Optional<Item> optionalItem = itemRepository.findById(request.getRequestedItem().getId());
+        if (!optionalItem.isPresent()) {
+            return null;
+        }
+        request.setRequestedItem(optionalItem.get());
         request.setStatus(RequestStatus.CREATED.getStatus());
         return requestRepository.save(request);
     }
 
-    public Request acceptRequest(int requestId, int userId, List<Item> requiredItems) {
+    public Request acceptRequest(int requestId, int userId, List<Integer> requiredItemsIds) {
         Optional<Request> requestOptional = requestRepository.findById(requestId);
         if (!requestOptional.isPresent()) {
             return null;
@@ -46,12 +55,12 @@ public class RequestService {
         request.setSellerUser(user);
         request.setStatus(RequestStatus.ASSIGNED.getStatus());
         Optional<Recipe> recipeOptional = recipeRepository.findFirstByCreatedItem_Id(request.getRequestedItem().getId());
-        if (!recipeOptional.isPresent()) {
+        if (!recipeOptional.isPresent() || Objects.isNull(requiredItemsIds) || requiredItemsIds.isEmpty()) {
             return requestRepository.save(request);
         }
         Recipe recipe = recipeOptional.get();
         for (RecipeItem requiredItem : recipe.getRequiredItems()) {
-            if (requiredItems.contains(requiredItem.getItem())) {
+            if (requiredItemsIds.contains(requiredItem.getItem().getId())) {
                 Request child = new Request();
                 child.setBuyerUser(user);
                 child.setCount(requiredItem.getItemsRequired());
@@ -60,7 +69,7 @@ public class RequestService {
                 createRequest(child);
             }
         }
-        return request;
+        return requestRepository.save(request);
     }
 
     public Request completeRequest(int requestId, int price) {
@@ -101,6 +110,10 @@ public class RequestService {
         requestRepository.saveAll(request.getChildrenRequests());
         request.setStatus(RequestStatus.CLOSED.getStatus());
         return requestRepository.save(request);
+    }
+
+    public List<Request> getAllRequests() {
+        return requestRepository.findAll();
     }
 }
 
