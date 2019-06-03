@@ -45,7 +45,7 @@ public class RequestService {
         User user = userOptional.get();
         request.setSellerUser(user);
         request.setStatus(RequestStatus.ASSIGNED.getStatus());
-        Optional<Recipe> recipeOptional = recipeRepository.findByCreatedItem_Id(request.getRequestedItem().getId());
+        Optional<Recipe> recipeOptional = recipeRepository.findFirstByCreatedItem_Id(request.getRequestedItem().getId());
         if (!recipeOptional.isPresent()) {
             return requestRepository.save(request);
         }

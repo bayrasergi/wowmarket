@@ -22,9 +22,9 @@ public class RecipeItem {
     private Recipe recipe;
 
     @ManyToOne
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "required_item_id")
     private Item item;
 
-    @Column
+    @Column(name = "`count`")
     private int itemsRequired;
 }

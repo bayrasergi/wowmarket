@@ -16,6 +16,6 @@ public class RecipeService {
     private RecipeRepository recipeRepository;
 
     public Recipe getRecipeByCreatedItemId(int itemId) {
-        return recipeRepository.findByCreatedItem_Id(itemId).orElse(null);
+        return recipeRepository.findFirstByCreatedItem_Id(itemId).orElse(null);
     }
 }

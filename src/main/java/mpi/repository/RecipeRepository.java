@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 
-    Optional<Recipe> findByCreatedItem_Id(int createdItemId);
+    Optional<Recipe> findFirstByCreatedItem_Id(int createdItemId);
 }
