@@ -16,7 +16,7 @@ public class LotService {
     private LotRepository lotRepository;
 
     public List<Lot> getAllLots() {
-        return lotRepository.findAllNotInRequests();
+        return lotRepository.findAll();
     }
 
     public List<Lot> createLots(List<Lot> lots) {

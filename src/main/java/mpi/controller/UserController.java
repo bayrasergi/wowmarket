@@ -1,7 +1,6 @@
 package mpi.controller;
 
 import lombok.AllArgsConstructor;
-import mpi.model.Profession;
 import mpi.model.User;
 import mpi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

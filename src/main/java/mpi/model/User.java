@@ -1,6 +1,5 @@
 package mpi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,10 +21,9 @@ public class User {
     private String name;
 
     @Column
-    private String email;
+    private String username;
 
     @Column
-    @JsonIgnore
     private String password;
 
     @ManyToOne
