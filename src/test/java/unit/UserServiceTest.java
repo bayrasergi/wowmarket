@@ -2,6 +2,7 @@ package unit;
 
 import mpi.model.User;
 import mpi.repository.CertificateRepository;
+import mpi.repository.MessageRepository;
 import mpi.repository.ProfessionRepository;
 import mpi.repository.UserRepository;
 import mpi.service.UserService;
@@ -23,12 +24,14 @@ public class UserServiceTest {
     CertificateRepository certificateRepository;
     @Mock
     ProfessionRepository professionRepository;
+    @Mock
+    MessageRepository messageRepository;
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.initMocks(this);
-        userService = new UserService(userRepository, certificateRepository, professionRepository, bCryptPasswordEncoder);
+        userService = new UserService(userRepository, certificateRepository, professionRepository, messageRepository, bCryptPasswordEncoder);
     }
 
     @Test
