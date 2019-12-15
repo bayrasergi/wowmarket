@@ -1,16 +1,18 @@
 package mpi.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mpi.serializer.ItemSerializer;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "item")
+@JsonSerialize(using = ItemSerializer.class)
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,12 +1,12 @@
 package mpi.repository;
 
-import mpi.model.Item;
+import mpi.model.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Integer> {
-    List<Item> findAllByName(String name);
+public interface MessageRepository extends JpaRepository<Message, Integer> {
+    List<Message> findAllByUser_Id(int userId);
 }

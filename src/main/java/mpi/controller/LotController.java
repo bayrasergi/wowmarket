@@ -34,4 +34,10 @@ public class LotController {
     public ResponseEntity<List<Lot>> getLotsByItemId(@PathParam("itemId") int itemId) {
         return ResponseEntity.ok(lotService.getLotsByItemId(itemId));
     }
+
+    @GetMapping("/sellerUser/{userId}")
+    @ResponseBody
+    public ResponseEntity<List<Lot>> getLotsByUserId(@PathParam("userId") int userId) {
+        return ResponseEntity.ok(lotService.getLotsBySellerUserId(userId));
+    }
 }

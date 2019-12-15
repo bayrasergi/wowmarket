@@ -1,17 +1,22 @@
 package mpi.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mpi.deserializer.RecipeDeserializer;
+import mpi.serializer.RecipeSerializer;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "recipe")
+@JsonSerialize(using = RecipeSerializer.class)
+@JsonDeserialize(using = RecipeDeserializer.class)
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

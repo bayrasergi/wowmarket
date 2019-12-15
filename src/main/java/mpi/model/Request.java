@@ -1,19 +1,24 @@
 package mpi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mpi.deserializer.RequestDeserializer;
+import mpi.serializer.RequestSerializer;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "`request`")
+@JsonSerialize(using = RequestSerializer.class)
+@JsonDeserialize(using = RequestDeserializer.class)
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +30,6 @@ public class Request {
     private Item requestedItem;
 
     @ManyToOne
-
     @JoinColumn(name = "buyer_user_id")
     private User buyerUser;
 

@@ -1,16 +1,23 @@
 package mpi.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mpi.deserializer.CertificateDeserializer;
+import mpi.serializer.CertificateSerializer;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "certificate")
+@JsonSerialize(using = CertificateSerializer.class)
+@JsonDeserialize(using = CertificateDeserializer.class)
 public class Certificate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

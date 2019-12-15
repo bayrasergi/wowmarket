@@ -1,15 +1,11 @@
 package mpi.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "profession")
 public class Profession {

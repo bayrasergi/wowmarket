@@ -20,4 +20,6 @@ public interface LotRepository extends JpaRepository<Lot, Integer> {
     @Query(value = "SELECT l FROM lot l WHERE l.lot_id not in (SELECT r.lot_id FROM request r)",
             nativeQuery = true)
     List<Lot> findAllNotInRequests();
+
+    List<Lot> findAllBySellerUser_Id(int userId);
 }

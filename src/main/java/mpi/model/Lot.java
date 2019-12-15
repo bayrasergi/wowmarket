@@ -1,16 +1,18 @@
 package mpi.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Data;
+import mpi.deserializer.LotDeserializer;
+import mpi.serializer.LotSerializer;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "lot")
+@JsonSerialize(using = LotSerializer.class)
+@JsonDeserialize(using = LotDeserializer.class)
 public class Lot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
