@@ -12,8 +12,7 @@ import mpi.util.JsonUtil;
 
 import java.io.IOException;
 
-import static mpi.util.JsonUtil.getInt;
-import static mpi.util.JsonUtil.getString;
+import static mpi.util.JsonUtil.*;
 
 public class LotDeserializer extends JsonDeserializer<Lot> {
     @Override
@@ -33,8 +32,7 @@ public class LotDeserializer extends JsonDeserializer<Lot> {
         item.setId(getInt(json, "item", "id"));
         item.setName(getString(json, "item", "name"));
         lot.setItem(item);
-        lot.setSellerUser(new User());
-        lot.getSellerUser().setUsername(getString(json, "sellerUsername"));
+        lot.setSellerUser(UserDeserializer.deserialize(get(json, "sellerUser")));
         return lot;
     }
 }

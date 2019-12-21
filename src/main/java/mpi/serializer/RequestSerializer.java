@@ -18,13 +18,15 @@ public class RequestSerializer extends JsonSerializer<Request> {
     public static RequestDTO serialize(Request request) {
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setId(request.getId());
-        requestDTO.setBuyerUsername(request.getBuyerUser().getUsername());
-        requestDTO.setSellerUsername(request.getSellerUser().getUsername());
+        requestDTO.setBuyerUser(UserSerializer.serialize(request.getBuyerUser()));
+        requestDTO.setSellerUser(UserSerializer.serialize(request.getSellerUser()));
         requestDTO.setCount(request.getCount());
-        requestDTO.setLot(LotSerializer.serialize(request.getLot()));
         requestDTO.setParentRequestId(request.getParentRequest().getId());
         requestDTO.setRequestedItem(ItemSerializer.serialize(request.getRequestedItem()));
         requestDTO.setStatus(request.getStatus());
+        requestDTO.setPrice(request.getPrice());
+        requestDTO.setPayment(request.getPayment());
+        requestDTO.setPrepayment(request.getPrepayment());
         return requestDTO;
     }
 }

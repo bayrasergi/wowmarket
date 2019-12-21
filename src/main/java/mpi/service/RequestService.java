@@ -84,14 +84,6 @@ public class RequestService {
                 closeRequest(childrenRequest.getId());
             }
         }
-        Lot lot = new Lot();
-        lot.setCount(request.getCount());
-        lot.setItem(request.getRequestedItem());
-        lot.setSellerUser(request.getSellerUser());
-        lot.setPrice(price);
-        lot.setComment("Lot created due to request");
-        lotRepository.save(lot);
-        request.setLot(lot);
         return requestRepository.save(request);
     }
 

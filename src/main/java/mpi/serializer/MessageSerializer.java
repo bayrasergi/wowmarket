@@ -19,7 +19,7 @@ public class MessageSerializer extends JsonSerializer<Message> {
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setId(message.getId());
         messageDTO.setText(message.getText());
-        messageDTO.setUsername(message.getUser().getUsername());
+        messageDTO.setUser(UserSerializer.serialize(message.getUser()));
         messageDTO.setTimestamp(message.getTimestamp().getTime());
         return messageDTO;
     }

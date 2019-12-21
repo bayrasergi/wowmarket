@@ -35,4 +35,7 @@ public class Lot {
 
     @Column
     private String comment;
+
+    @Column
+    private String status;
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 public class LotDTO {
     private int id;
     private ItemDTO item;
-    private String sellerUsername;
+    private UserDTO sellerUser;
     private int count;
     private int price;
     private String comment;

@@ -6,6 +6,9 @@ public enum RequestStatus {
     CREATED("CREATED"),
     ASSIGNED("ASSIGNED"),
     READY("READY"),
+    DELIVERED("DELIVERED"),
+    REJECTED("REJECTED"),
+    WITHDRAWN("WITHDRAWN"),
     CLOSED("CLOSED");
 
     @Getter

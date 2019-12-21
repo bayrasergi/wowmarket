@@ -22,7 +22,7 @@ public class LotSerializer extends JsonSerializer<Lot> {
         lotDTO.setCount(lot.getCount());
         lotDTO.setItem(ItemSerializer.serialize(lot.getItem()));
         lotDTO.setPrice(lot.getPrice());
-        lotDTO.setSellerUsername(lot.getSellerUser().getUsername());
+        lotDTO.setSellerUser(UserSerializer.serialize(lot.getSellerUser()));
         return lotDTO;
     }
 }

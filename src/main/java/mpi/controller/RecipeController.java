@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/recipes")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -22,5 +24,11 @@ public class RecipeController {
     @ResponseBody
     public ResponseEntity<Recipe> getRecipeByCreatedItemId(@PathVariable("itemId") int itemId) {
         return ResponseEntity.ok(recipeService.getRecipeByCreatedItemId(itemId));
+    }
+
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity<List<Recipe>> getAllRecipes() {
+        return ResponseEntity.ok(recipeService.getAllRecipes());
     }
 }

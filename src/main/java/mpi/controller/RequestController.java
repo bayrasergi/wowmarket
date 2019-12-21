@@ -23,6 +23,12 @@ public class RequestController {
         return ResponseEntity.ok(requestService.getAllRequests());
     }
 
+//    @GetMapping
+//    @ResponseBody
+//    public ResponseEntity<List<Request>> getRequestsByProfession() {
+//        return ResponseEntity.status(HttpStatus.OK).body(null);
+//    }
+
     @PostMapping
     @ResponseBody
     public ResponseEntity<Request> createRequest(@RequestBody Request request) {

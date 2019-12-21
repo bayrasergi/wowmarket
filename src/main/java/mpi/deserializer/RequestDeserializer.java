@@ -11,8 +11,7 @@ import mpi.model.User;
 
 import java.io.IOException;
 
-import static mpi.util.JsonUtil.getInt;
-import static mpi.util.JsonUtil.getString;
+import static mpi.util.JsonUtil.*;
 
 public class RequestDeserializer extends JsonDeserializer<Request> {
     @Override
@@ -33,11 +32,11 @@ public class RequestDeserializer extends JsonDeserializer<Request> {
         item.setId(getInt(json, "requestedItem", "id"));
         item.setName(getString(json, "requestedItem", "name"));
         request.setRequestedItem(item);
-        request.setSellerUser(new User());
-        request.getSellerUser().setUsername(getString(json, "sellerUsername"));
-        request.setBuyerUser(new User());
-        request.getBuyerUser().setUsername(getString(json, "buyerUsername"));
-        request.setLot(LotDeserializer.deserialize(json.get("lot")));
+        request.setSellerUser(UserDeserializer.deserialize(get(json, "sellerUser")));
+        request.setBuyerUser(UserDeserializer.deserialize(get(json, "buyerUser")));
+        request.setPrice(getInt(json, "price"));
+        request.setPrepayment(getInt(json, "prepayment"));
+        request.setPayment(getInt(json, "payment"));
         return request;
     }
 }

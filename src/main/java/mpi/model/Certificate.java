@@ -31,4 +31,7 @@ public class Certificate {
     @ManyToOne
     @JoinColumn(name = "profession_id")
     private Profession profession;
+
+    @Column
+    private boolean approved;
 }

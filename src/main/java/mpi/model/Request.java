@@ -37,9 +37,14 @@ public class Request {
     @JoinColumn(name = "seller_user_id")
     private User sellerUser;
 
-    @OneToOne
-    @JoinColumn(name = "lot_id")
-    private Lot lot;
+    @Column
+    private int price;
+
+    @Column
+    private int prepayment;
+
+    @Column
+    private int payment;
 
     @Column
     private int count;

@@ -28,8 +28,7 @@ public class MessageDeserializer extends JsonDeserializer<Message> {
         message.setId(getInt(json, "id"));
         message.setText(getString(json, "text"));
         message.setTimestamp(Timestamp.from(Instant.ofEpochMilli(getLong(json, "timestamp"))));
-        message.setUser(new User());
-        message.getUser().setUsername(getString(json, "username"));
+        message.setUser(UserDeserializer.deserialize(get(json, "user")));
         return message;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -17,5 +18,9 @@ public class RecipeService {
 
     public Recipe getRecipeByCreatedItemId(int itemId) {
         return recipeRepository.findFirstByCreatedItem_Id(itemId).orElse(null);
+    }
+
+    public List<Recipe> getAllRecipes() {
+        return recipeRepository.findAll();
     }
 }
