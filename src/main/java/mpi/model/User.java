@@ -36,5 +36,9 @@ public class User {
     private String role;
 
     @Column
-    private boolean locked;
+    private Boolean locked;
+
+    public boolean isAdmin() {
+        return Role.ADMIN.getName().equals(role);
+    }
 }

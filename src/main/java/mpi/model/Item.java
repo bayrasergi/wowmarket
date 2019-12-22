@@ -21,4 +21,7 @@ public class Item {
 
     @Column
     private String name;
+
+    @Column
+    private String type;
 }

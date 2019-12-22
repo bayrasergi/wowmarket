@@ -15,8 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static mpi.util.JsonUtil.getInt;
-import static mpi.util.JsonUtil.getString;
+import static mpi.util.JsonUtil.*;
 
 public class RecipeDeserializer extends JsonDeserializer<Recipe> {
     @Override
@@ -29,12 +28,8 @@ public class RecipeDeserializer extends JsonDeserializer<Recipe> {
     public static Recipe deserialize(JsonNode json) {
         Recipe recipe = new Recipe();
         recipe.setId(getInt(json, "id"));
-        Item item = new Item();
-        item.setId(getInt(json, "createdItem", "id"));
-        item.setName(getString(json, "createdItem", "name"));
-        recipe.setCreatedItem(item);
-        recipe.setRequiredProfession(new Profession());
-        recipe.getRequiredProfession().setName(getString(json, "requiredProfession"));
+        recipe.setCreatedItem(ItemDeserializer.deserialize(get(json, "createdItem")));
+        recipe.setRequiredProfession(ProfessionDeserializer.deserialize(get(json, "requiredProfession")));
         List<RecipeItem> recipeItems = new ArrayList<>();
         for (JsonNode requiredItem : json.get("requiredItems")) {
             RecipeItem recipeItem = new RecipeItem();

@@ -28,4 +28,10 @@ public class ItemController {
     public ResponseEntity<List<Item>> createItems(@RequestBody List<Item> items) {
         return ResponseEntity.status(HttpStatus.CREATED).body(itemService.createItems(items));
     }
+
+    @GetMapping("/type/{itemType}")
+    @ResponseBody
+    public ResponseEntity<List<Item>> getAllItemsByType(@PathVariable("itemType") String itemType) {
+        return ResponseEntity.ok(itemService.getAllByItemType(itemType));
+    }
 }

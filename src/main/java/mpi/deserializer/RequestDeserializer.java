@@ -28,10 +28,7 @@ public class RequestDeserializer extends JsonDeserializer<Request> {
         request.setCount(getInt(json, "count"));
         request.setParentRequest(new Request());
         request.getParentRequest().setId(getInt(json, "parentRequestId"));
-        Item item = new Item();
-        item.setId(getInt(json, "requestedItem", "id"));
-        item.setName(getString(json, "requestedItem", "name"));
-        request.setRequestedItem(item);
+        request.setRequestedItem(ItemDeserializer.deserialize(get(json, "requestedItem")));
         request.setSellerUser(UserDeserializer.deserialize(get(json, "sellerUser")));
         request.setBuyerUser(UserDeserializer.deserialize(get(json, "buyerUser")));
         request.setPrice(getInt(json, "price"));

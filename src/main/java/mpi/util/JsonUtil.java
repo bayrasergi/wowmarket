@@ -28,7 +28,7 @@ public class JsonUtil {
         return json.asLong();
     }
 
-    public static boolean getBoolean(JsonNode json, String... nodes) {
+    public static Boolean getBoolean(JsonNode json, String... nodes) {
         json = get(json, nodes);
         if (json.isNull()) {
             return false;

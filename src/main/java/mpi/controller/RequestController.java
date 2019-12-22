@@ -17,17 +17,29 @@ public class RequestController {
 
     private RequestService requestService;
 
-    @GetMapping
+    @GetMapping("/all")
     @ResponseBody
     public ResponseEntity<List<Request>> getAllRequests() {
         return ResponseEntity.ok(requestService.getAllRequests());
     }
 
-//    @GetMapping
-//    @ResponseBody
-//    public ResponseEntity<List<Request>> getRequestsByProfession() {
-//        return ResponseEntity.status(HttpStatus.OK).body(null);
-//    }
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity<List<Request>> getRequestsByUser() {
+        return ResponseEntity.ok(requestService.getRequestsByUser());
+    }
+
+    @GetMapping("/profession")
+    @ResponseBody
+    public ResponseEntity<List<Request>> getRequestsByProfession() {
+        return ResponseEntity.ok(requestService.getRequestsByProfession());
+    }
+
+    @PutMapping
+    @ResponseBody
+    public ResponseEntity<List<Request>> editRequests(@RequestBody List<Request> edits) {
+        return ResponseEntity.ok(requestService.editRequests(edits));
+    }
 
     @PostMapping
     @ResponseBody

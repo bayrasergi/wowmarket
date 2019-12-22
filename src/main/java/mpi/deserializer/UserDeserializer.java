@@ -9,8 +9,7 @@ import mpi.model.User;
 
 import java.io.IOException;
 
-import static mpi.util.JsonUtil.getInt;
-import static mpi.util.JsonUtil.getString;
+import static mpi.util.JsonUtil.*;
 
 public class UserDeserializer extends JsonDeserializer<User> {
     @Override
@@ -26,6 +25,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
         user.setPassword(getString(json, "password"));
         user.setRole(getString(json, "role"));
         user.setUsername(getString(json, "username"));
+        user.setLocked(getBoolean(json, "locked"));
         return user;
     }
 }

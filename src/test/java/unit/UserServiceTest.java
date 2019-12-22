@@ -6,6 +6,7 @@ import mpi.repository.MessageRepository;
 import mpi.repository.ProfessionRepository;
 import mpi.repository.UserRepository;
 import mpi.service.UserService;
+import mpi.util.AuthenticationHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -26,12 +27,14 @@ public class UserServiceTest {
     ProfessionRepository professionRepository;
     @Mock
     MessageRepository messageRepository;
+    @Mock
+    AuthenticationHelper authenticationHelper;
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.initMocks(this);
-        userService = new UserService(userRepository, certificateRepository, professionRepository, messageRepository, bCryptPasswordEncoder);
+        userService = new UserService(userRepository, certificateRepository, professionRepository, messageRepository, bCryptPasswordEncoder, authenticationHelper);
     }
 
     @Test

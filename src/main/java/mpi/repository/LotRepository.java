@@ -11,15 +11,11 @@ import java.util.List;
 @Repository
 public interface LotRepository extends JpaRepository<Lot, Integer> {
 
-    List<Lot> findAllByItem_Id(int itemId);
+    List<Lot> findAllBySellerUser_Id(int id);
 
-    @Query(value = "SELECT sum(\"count\") FROM lot WHERE item_id=:itemId",
-            nativeQuery = true)
-    int countAvailableItems(@Param("itemId") int itemId);
+    List<Lot> findAllByStatus(String status);
 
-    @Query(value = "SELECT l FROM lot l WHERE l.lot_id not in (SELECT r.lot_id FROM request r)",
-            nativeQuery = true)
-    List<Lot> findAllNotInRequests();
+    List<Lot> findAllByItem_Name(String name);
 
-    List<Lot> findAllBySellerUser_Id(int userId);
+    List<Lot> findAllByItem_Type(String type);
 }

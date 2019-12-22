@@ -22,7 +22,7 @@ public class RecipeSerializer extends JsonSerializer<Recipe> {
     public static RecipeDTO serialize(Recipe recipe) {
         RecipeDTO recipeDTO = new RecipeDTO();
         recipeDTO.setId(recipe.getId());
-        recipeDTO.setRequiredProfession(recipe.getRequiredProfession().getName());
+        recipeDTO.setRequiredProfession(ProfessionSerializer.serialize(recipe.getRequiredProfession()));
         recipeDTO.setCreatedItem(ItemSerializer.serialize(recipe.getCreatedItem()));
         List<RecipeItemDTO> requiredItems = new ArrayList<>();
         recipe.getRequiredItems().forEach(ri -> requiredItems.add(serialize(ri)));

@@ -8,4 +8,5 @@ public class UserDTO {
     private String name;
     private String username;
     private String role;
+    private Boolean locked;
 }

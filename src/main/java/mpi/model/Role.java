@@ -24,8 +24,10 @@ public enum Role {
                 return COLLECTOR;
             case "CREATOR":
                 return CREATOR;
-            default:
+            case "USER":
                 return USER;
+            default:
+                return null;
         }
     }
 }

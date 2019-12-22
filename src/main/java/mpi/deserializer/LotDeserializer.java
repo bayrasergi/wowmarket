@@ -28,10 +28,7 @@ public class LotDeserializer extends JsonDeserializer<Lot> {
         lot.setId(getInt(json, "id"));
         lot.setCount(getInt(json, "count"));
         lot.setPrice(getInt(json, "price"));
-        Item item = new Item();
-        item.setId(getInt(json, "item", "id"));
-        item.setName(getString(json, "item", "name"));
-        lot.setItem(item);
+        lot.setItem(ItemDeserializer.deserialize(get(json, "item")));
         lot.setSellerUser(UserDeserializer.deserialize(get(json, "sellerUser")));
         return lot;
     }

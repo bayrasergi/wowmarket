@@ -1,6 +1,7 @@
 package mpi.controller;
 
 import lombok.AllArgsConstructor;
+import mpi.model.Certificate;
 import mpi.model.Message;
 import mpi.model.User;
 import mpi.service.UserService;
@@ -30,9 +31,33 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
     }
 
+    @PutMapping
+    @ResponseBody
+    public ResponseEntity<List<User>> editUsers(@RequestBody List<User> users) {
+        return ResponseEntity.ok(userService.editUsers(users));
+    }
+
+    @PostMapping("/certificates")
+    @ResponseBody
+    public ResponseEntity<Certificate> addCertificate(@RequestBody Certificate certificate) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createCertificate(certificate));
+    }
+
+    @GetMapping("/certificates")
+    @ResponseBody
+    public ResponseEntity<List<Certificate>> getAllCertificates() {
+        return ResponseEntity.ok(userService.getAllCertificates());
+    }
+
+    @PutMapping("/certificates")
+    @ResponseBody
+    public ResponseEntity<List<Certificate>> editCertificates(@RequestBody List<Certificate> edits) {
+        return ResponseEntity.ok(userService.editCertificates(edits));
+    }
+
     @PostMapping("/{userId}/certificates/{professionName}")
     @ResponseBody
-    public ResponseEntity<User> addCertificate(@PathVariable("userId") int userId, @PathVariable("professionName") String professionName) {
+    public ResponseEntity<User> addCertificatettttt(@PathVariable("userId") int userId, @PathVariable("professionName") String professionName) {
         return ResponseEntity.ok(userService.addCertificate(userId, professionName));
     }
 

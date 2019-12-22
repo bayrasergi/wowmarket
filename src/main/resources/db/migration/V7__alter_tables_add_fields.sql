@@ -8,3 +8,5 @@ ALTER TABLE "request" ADD COLUMN "prepayment" int;
 ALTER TABLE "user" ADD COLUMN "locked" boolean;
 
 ALTER TABLE "certificate" ADD COLUMN "approved" boolean;
+
+ALTER TABLE "item" ADD COLUMN "type" VARCHAR(20);

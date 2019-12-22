@@ -1,15 +1,19 @@
 package mpi.service;
 
 import lombok.AllArgsConstructor;
+import mpi.exception.EntityException;
 import mpi.model.*;
-import mpi.repository.*;
+import mpi.repository.ItemRepository;
+import mpi.repository.RecipeRepository;
+import mpi.repository.RequestRepository;
+import mpi.repository.UserRepository;
+import mpi.util.AuthenticationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -19,26 +23,102 @@ public class RequestService {
     private RequestRepository requestRepository;
     private RecipeRepository recipeRepository;
     private ItemRepository itemRepository;
-    private LotRepository lotRepository;
     private UserRepository userRepository;
-
-    public Request getRequestById(int id) {
-        return requestRepository.getOne(id);
-    }
+    private AuthenticationHelper authenticationHelper;
 
     public Request createRequest(Request request) {
-        Optional<User> optionalUser = userRepository.findById(request.getBuyerUser().getId());
-        if (!optionalUser.isPresent()) {
-            return null;
+        if (request.getBuyerUser() == null) {
+            request.setBuyerUser(authenticationHelper.getCurrentUser());
+        } else {
+            validateAndSetBuyerUser(request);
         }
-        request.setBuyerUser(optionalUser.get());
-        Optional<Item> optionalItem = itemRepository.findById(request.getRequestedItem().getId());
-        if (!optionalItem.isPresent()) {
-            return null;
-        }
-        request.setRequestedItem(optionalItem.get());
+        validateAndSetItem(request);
         request.setStatus(RequestStatus.CREATED.getStatus());
+        validatePrice(request);
+        int prepayment = (int) (request.getPrice() * 0.1);
+        request.setPrepayment(prepayment > 0 ? prepayment : 1);
+        validateCount(request);
+        Request parent = request.getParentRequest();
+        if (parent != null) {
+            if (parent.getId() <= 0) {
+                throw new EntityException("Parent Request id must be greater than 0", HttpStatus.BAD_REQUEST, request);
+            }
+            Optional<Request> oParent = requestRepository.findById(parent.getId());
+            if (!oParent.isPresent()) {
+                throw new EntityException(String.format("Parent Request with id %d not found!", parent.getId()), HttpStatus.BAD_REQUEST, request);
+            }
+            request.setParentRequest(oParent.get());
+        }
         return requestRepository.save(request);
+    }
+
+    public List<Request> getRequestsByUser() {
+        User currentUser = authenticationHelper.getCurrentUser();
+        return requestRepository.getAllByBuyerUserOrSellerUser(currentUser.getId());
+    }
+
+    public List<Request> getRequestsByProfession() {
+        User currentUser = authenticationHelper.getCurrentUser();
+        return requestRepository.getAllByProfession(currentUser.getId());
+    }
+
+    public List<Request> editRequests(List<Request> edits) {
+        Set<Request> requests = new HashSet<>();
+        User currentUser = authenticationHelper.getCurrentUser();
+        edits.forEach(requestEdit -> {
+            validateId(requestEdit);
+            Optional<Request> oRequest = requestRepository.findById(requestEdit.getId());
+            if (!oRequest.isPresent()) {
+                throw new EntityException(String.format("Request with id %d not found!", requestEdit.getId()), HttpStatus.BAD_REQUEST, edits);
+            }
+            Request request = oRequest.get();
+            requests.add(request);
+            if (requestEdit.getStatus() != null) {
+                RequestStatus status = RequestStatus.getStatusByName(requestEdit.getStatus());
+                if (status != null) {
+                    if (currentUser.isAdmin() && status != RequestStatus.CLOSED && status != RequestStatus.DELIVERED
+                            && status != RequestStatus.REJECTED) {
+                        request.setStatus(status.name());
+                    } else if ((request.getBuyerUser().getId() == currentUser.getId())
+                            && (status == RequestStatus.WITHDRAWN || status == RequestStatus.CLOSED)) {
+                        List<Request> children = setStatusToChildren(request, status);
+                        requests.addAll(children);
+                        request.setStatus(status.name());
+                    } else if (request.getSellerUser() == null && status == RequestStatus.ASSIGNED
+                            || request.getSellerUser() != null && (status == RequestStatus.READY
+                            || status == RequestStatus.CREATED)) {
+                        if (request.getSellerUser() == null) {
+                            request.setSellerUser(currentUser);
+                        }
+                        if (status == RequestStatus.CREATED) {
+                            List<Request> children = setStatusToChildren(request, RequestStatus.WITHDRAWN);
+                            requests.addAll(children);
+                        }
+                        request.setStatus(status.name());
+                    }
+                }
+            }
+            if (requestEdit.getPayment() >= 0) {
+                request.setPayment(requestEdit.getPayment());
+            }
+        });
+        return new ArrayList<>(requests);
+    }
+
+    public List<Request> setStatusToChildren(Request request, RequestStatus status) {
+        List<Request> ret = new ArrayList<>();
+        List<Request> childrenRequests = request.getChildrenRequests();
+        if (childrenRequests != null && !childrenRequests.isEmpty()) {
+            childrenRequests.forEach(child -> {
+                child.setStatus(status.name());
+                ret.add(child);
+                List<Request> childrenOfChild = setStatusToChildren(child, status);
+                if (childrenOfChild != null && !childrenOfChild.isEmpty()) {
+                    ret.addAll(childrenOfChild);
+                }
+            });
+        }
+        return ret;
     }
 
     public Request acceptRequest(int requestId, int userId, List<Integer> requiredItemsIds) {
@@ -106,6 +186,63 @@ public class RequestService {
 
     public List<Request> getAllRequests() {
         return requestRepository.findAll();
+    }
+
+    public void validateId(Request request) {
+        if (request.getId() <= 0) {
+            throw new EntityException("Id must be greater than 0", HttpStatus.BAD_REQUEST, request);
+        }
+    }
+
+    public void validateAndSetBuyerUser(Request request) {
+        if (request.getBuyerUser() == null || request.getBuyerUser().getId() <= 0) {
+            throw new EntityException("Buyer user id must be greater than 0", HttpStatus.BAD_REQUEST, request);
+        }
+        Optional<User> oUser = userRepository.findById(request.getBuyerUser().getId());
+        if (oUser.isPresent()) {
+            request.setBuyerUser(oUser.get());
+            return;
+        }
+        throw new EntityException(String.format("User with id %d not found!", request.getBuyerUser().getId()),
+                HttpStatus.BAD_REQUEST, request);
+    }
+
+    public void validateAndSetSellerUser(Request request) {
+        if (request.getSellerUser() == null || request.getSellerUser().getId() <= 0) {
+            throw new EntityException("Seller user id must be greater than 0", HttpStatus.BAD_REQUEST, request);
+        }
+        Optional<User> oUser = userRepository.findById(request.getSellerUser().getId());
+        if (oUser.isPresent()) {
+            request.setSellerUser(oUser.get());
+            return;
+        }
+        throw new EntityException(String.format("User with id %d not found!", request.getSellerUser().getId()),
+                HttpStatus.BAD_REQUEST, request);
+    }
+
+    public void validateAndSetItem(Request request) {
+        if (request.getRequestedItem() == null || request.getRequestedItem().getId() <= 0) {
+            throw new EntityException("Requested item id must be greater than 0", HttpStatus.BAD_REQUEST, request);
+        }
+        Optional<Item> oItem = itemRepository.findById(request.getRequestedItem().getId());
+        if (oItem.isPresent()) {
+            request.setRequestedItem(oItem.get());
+            return;
+        }
+        throw new EntityException(String.format("Item with id %d not found", request.getRequestedItem().getId()),
+                HttpStatus.BAD_REQUEST, request);
+    }
+
+    public void validatePrice(Request request) {
+        if (request.getPrice() <= 0) {
+            throw new EntityException("Price must be greater than 0", HttpStatus.BAD_REQUEST, request);
+        }
+    }
+
+    public void validateCount(Request request) {
+        if (request.getCount() <= 0) {
+            throw new EntityException("Count must be greater than 0", HttpStatus.BAD_REQUEST, request);
+        }
     }
 }
 

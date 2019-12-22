@@ -17,4 +17,24 @@ public enum RequestStatus {
     RequestStatus(String status) {
         this.status = status;
     }
+
+    public static RequestStatus getStatusByName(String name) {
+        switch (name.toUpperCase()) {
+            case "CREATED":
+                return CREATED;
+            case "ASSIGNED":
+                return ASSIGNED;
+            case "READY":
+                return READY;
+            case "DELIVERED":
+                return DELIVERED;
+            case "REJECTED":
+                return REJECTED;
+            case "WITHDRAWN":
+                return WITHDRAWN;
+            case "CLOSED":
+                return CLOSED;
+        }
+        return null;
+    }
 }

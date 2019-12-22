@@ -9,6 +9,6 @@ public class RecipeDTO {
     private int id;
     private List<RecipeItemDTO> requiredItems;
     private ItemDTO createdItem;
-    private String requiredProfession;
+    private ProfessionDTO requiredProfession;
 
 }

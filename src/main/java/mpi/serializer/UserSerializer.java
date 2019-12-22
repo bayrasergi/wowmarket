@@ -21,6 +21,7 @@ public class UserSerializer extends JsonSerializer<User> {
         userDTO.setName(user.getName());
         userDTO.setUsername(user.getUsername());
         userDTO.setRole(user.getRole());
+        userDTO.setLocked(user.getLocked());
         return userDTO;
     }
 }

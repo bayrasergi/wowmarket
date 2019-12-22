@@ -33,57 +33,57 @@ INSERT INTO public.certificate("profession_id", user_id, approved) VALUES(7,12, 
 INSERT INTO public.certificate("profession_id", user_id, approved) VALUES(1,13, false);
 
 -- Tailoring
-INSERT INTO public.item ("name") VALUES('Linen Cloth'); -- 1
-INSERT INTO public.item ("name") VALUES('Bolt of Linen Cloth'); -- 2
-INSERT INTO public.item ("name") VALUES('Coarse Thread'); -- 3
-INSERT INTO public.item ("name") VALUES('Red Dye'); -- 4
-INSERT INTO public.item ("name") VALUES('Gray Dye'); -- 5
-INSERT INTO public.item ("name") VALUES('Wool Cloth'); -- 6
-INSERT INTO public.item ("name") VALUES('Bolt of Woolen Cloth'); -- 7
-INSERT INTO public.item ("name") VALUES('Fine Thread'); -- 8
+INSERT INTO public.item ("name","type") VALUES('Linen Cloth','STANDARD'); -- 1
+INSERT INTO public.item ("name","type") VALUES('Bolt of Linen Cloth','CRAFTABLE'); -- 2
+INSERT INTO public.item ("name","type") VALUES('Coarse Thread','STANDARD'); -- 3
+INSERT INTO public.item ("name","type") VALUES('Red Dye','STANDARD'); -- 4
+INSERT INTO public.item ("name","type") VALUES('Gray Dye','STANDARD'); -- 5
+INSERT INTO public.item ("name","type") VALUES('Wool Cloth','STANDARD'); -- 6
+INSERT INTO public.item ("name","type") VALUES('Bolt of Woolen Cloth','CRAFTABLE'); -- 7
+INSERT INTO public.item ("name","type") VALUES('Fine Thread','STANDARD'); -- 8
 
-INSERT INTO public.item ("name") VALUES('Heavy Linen Gloves'); -- 9
-INSERT INTO public.item ("name") VALUES('Red Linen Shirt'); -- 10
-INSERT INTO public.item ("name") VALUES('Reinforced Linen Cape'); -- 11
-INSERT INTO public.item ("name") VALUES('Gray Woolen Shirt'); -- 12
-INSERT INTO public.item ("name") VALUES('Double-stitched Woolen Shoulders'); -- 13
+INSERT INTO public.item ("name","type") VALUES('Heavy Linen Gloves','CRAFTABLE'); -- 9
+INSERT INTO public.item ("name","type") VALUES('Red Linen Shirt','CRAFTABLE'); -- 10
+INSERT INTO public.item ("name","type") VALUES('Reinforced Linen Cape','CRAFTABLE'); -- 11
+INSERT INTO public.item ("name","type") VALUES('Gray Woolen Shirt','CRAFTABLE'); -- 12
+INSERT INTO public.item ("name","type") VALUES('Double-stitched Woolen Shoulders','CRAFTABLE'); -- 13
 
 -- Herbalism Alchemy
-INSERT INTO public.item ("name") VALUES('Peacebloom'); -- 14
-INSERT INTO public.item ("name") VALUES('Silverleaf'); -- 15
-INSERT INTO public.item ("name") VALUES('Earthroot'); -- 16
-INSERT INTO public.item ("name") VALUES('Empty Vial'); -- 17
+INSERT INTO public.item ("name","type") VALUES('Peacebloom','COLLECTIBLE'); -- 14
+INSERT INTO public.item ("name","type") VALUES('Silverleaf','COLLECTIBLE'); -- 15
+INSERT INTO public.item ("name","type") VALUES('Earthroot','COLLECTIBLE'); -- 16
+INSERT INTO public.item ("name","type") VALUES('Empty Vial','STANDARD'); -- 17
 
-INSERT INTO public.item ("name") VALUES('Minor Healing Potion'); -- 18
-INSERT INTO public.item ("name") VALUES('Weak Troll''s Blood Potion'); -- 19
-INSERT INTO public.item ("name") VALUES('Elixir of Minor Fortitude'); -- 20
+INSERT INTO public.item ("name","type") VALUES('Minor Healing Potion','CRAFTABLE'); -- 18
+INSERT INTO public.item ("name","type") VALUES('Weak Troll''s Blood Potion','CRAFTABLE'); -- 19
+INSERT INTO public.item ("name","type") VALUES('Elixir of Minor Fortitude','CRAFTABLE'); -- 20
 
 -- Mining Blacksmithing
-INSERT INTO public.item ("name") VALUES('Rough Stone'); -- 21
-INSERT INTO public.item ("name") VALUES('Malachite'); -- 22
-INSERT INTO public.item ("name") VALUES('Copper ore'); -- 23
-INSERT INTO public.item ("name") VALUES('Copper bar'); -- 24
-INSERT INTO public.item ("name") VALUES('Weak Flux'); -- 25
+INSERT INTO public.item ("name","type") VALUES('Rough Stone','COLLECTIBLE'); -- 21
+INSERT INTO public.item ("name","type") VALUES('Malachite','COLLECTIBLE'); -- 22
+INSERT INTO public.item ("name","type") VALUES('Copper ore','COLLECTIBLE'); -- 23
+INSERT INTO public.item ("name","type") VALUES('Copper bar','COLLECTIBLE'); -- 24
+INSERT INTO public.item ("name","type") VALUES('Weak Flux','STANDARD'); -- 25
 
-INSERT INTO public.item ("name") VALUES('Rough Grinding Stone'); -- 26
-INSERT INTO public.item ("name") VALUES('Copper Axe'); -- 27
-INSERT INTO public.item ("name") VALUES('Copper Mace'); -- 28
-INSERT INTO public.item ("name") VALUES('Copper Bracers'); -- 29
-INSERT INTO public.item ("name") VALUES('Copper Chain Vest'); -- 30
-INSERT INTO public.item ("name") VALUES('Copper Dagger'); -- 31
-INSERT INTO public.item ("name") VALUES('Copper Battle Axe'); -- 32
+INSERT INTO public.item ("name","type") VALUES('Rough Grinding Stone','CRAFTABLE'); -- 26
+INSERT INTO public.item ("name","type") VALUES('Copper Axe','CRAFTABLE'); -- 27
+INSERT INTO public.item ("name","type") VALUES('Copper Mace','CRAFTABLE'); -- 28
+INSERT INTO public.item ("name","type") VALUES('Copper Bracers','CRAFTABLE'); -- 29
+INSERT INTO public.item ("name","type") VALUES('Copper Chain Vest','CRAFTABLE'); -- 30
+INSERT INTO public.item ("name","type") VALUES('Copper Dagger','CRAFTABLE'); -- 31
+INSERT INTO public.item ("name","type") VALUES('Copper Battle Axe','CRAFTABLE'); -- 32
 
 -- Skinning Leatherworking
-INSERT INTO public.item ("name") VALUES('Ruined Leather Scraps'); -- 33
-INSERT INTO public.item ("name") VALUES('Light Leather'); -- 34
-INSERT INTO public.item ("name") VALUES('Light Hide'); -- 35
-INSERT INTO public.item ("name") VALUES('Salt'); -- 36
+INSERT INTO public.item ("name","type") VALUES('Ruined Leather Scraps','COLLECTIBLE'); -- 33
+INSERT INTO public.item ("name","type") VALUES('Light Leather','COLLECTIBLE'); -- 34
+INSERT INTO public.item ("name","type") VALUES('Light Hide','COLLECTIBLE'); -- 35
+INSERT INTO public.item ("name","type") VALUES('Salt','STANDARD'); -- 36
 
-INSERT INTO public.item ("name") VALUES('Cured Light Hide'); -- 37
-INSERT INTO public.item ("name") VALUES('Fine Leather Belt'); -- 38
-INSERT INTO public.item ("name") VALUES('Fine Leather Boots'); -- 39
-INSERT INTO public.item ("name") VALUES('Fine Leather Gloves'); -- 40
-INSERT INTO public.item ("name") VALUES('Embossed Leather Pants'); -- 41
+INSERT INTO public.item ("name","type") VALUES('Cured Light Hide','CRAFTABLE'); -- 37
+INSERT INTO public.item ("name","type") VALUES('Fine Leather Belt','CRAFTABLE'); -- 38
+INSERT INTO public.item ("name","type") VALUES('Fine Leather Boots','CRAFTABLE'); -- 39
+INSERT INTO public.item ("name","type") VALUES('Fine Leather Gloves','CRAFTABLE'); -- 40
+INSERT INTO public.item ("name","type") VALUES('Embossed Leather Pants','CRAFTABLE'); -- 41
 
 INSERT INTO public."recipe" (profession_id, created_item_id) VALUES(1, 21); -- 1
 INSERT INTO public."recipe" (profession_id, created_item_id) VALUES(1, 23); -- 2
@@ -185,69 +185,69 @@ INSERT INTO public.recipe_item (recipe_id, required_item_id, count) VALUES(32, 3
 INSERT INTO public.recipe_item (recipe_id, required_item_id, count) VALUES(32, 3, 2);
 INSERT INTO public.recipe_item (recipe_id, required_item_id, count) VALUES(32, 37, 1);
 
+-- Food
+INSERT INTO public.item ("name","type") VALUES('Ice Cold Milk','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Alterac Swiss','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Refreshed Spring Water','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Smoked Desert Dumplings','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Grilled Squid','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Roasted Quail','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Candy Cane','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Fine Aged Cheddar','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Tender Wolf Steak','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Cured Ham Steak','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Southshore Stout','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Shiny Red Apple','STANDARD');
+
+-- Rings
+INSERT INTO public.item ("name","type") VALUES('Mood Ring','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Ring of Scorn','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Quartz Ring','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Meadow Ring','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Clay Ring','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Blood Ring','STANDARD');
+
+-- Amulet
+INSERT INTO public.item ("name","type") VALUES('Glowing Green Talisman','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Crystal Starfire Medallion','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Basalt Necklace','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Necklace of Harmony','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Greenstone Talisman','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Marsh Chain','STANDARD');
+
+-- Weapon
+INSERT INTO public.item ("name","type") VALUES('Keen Machete','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Fine Scimitar','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Dull Blade','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Gladius','STANDARD');
+
+INSERT INTO public.item ("name","type") VALUES('Ashwood Bow','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Polished Shortbow','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Hunting Bow','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Heavy Shortbow','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Light Crossbow','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Heavy Crossbow','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Blackcrow','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Steelarrow Crossbow','STANDARD');
+
+INSERT INTO public.item ("name","type") VALUES('Worn Battleaxe','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Large Axe','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Battleworn Hammer','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Short Staff','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Bent Staff','STANDARD');
+
+-- Armor
+INSERT INTO public.item ("name","type") VALUES('Tarnished Chain Vest','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Rusted Chain Leggings','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Tarnished Chain Belt','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Charger''s Bindings','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Bloody Chain Boots','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Warrior''s Gloves','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Infantry Boots','STANDARD');
+INSERT INTO public.item ("name","type") VALUES('Infantry Leggings','STANDARD');
+
 -- Lots
 INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(40, 2, 12, 24, 'AVAILABLE');
 INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(41, 2, 4, 120, 'AVAILABLE');
 INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(50, 2, 1, 60, 'SELL');
 INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(51, 2, 4, 40, 'SELL');
-
--- Food
-INSERT INTO public.item ("name") VALUES('Ice Cold Milk');
-INSERT INTO public.item ("name") VALUES('Alterac Swiss');
-INSERT INTO public.item ("name") VALUES('Refreshed Spring Water');
-INSERT INTO public.item ("name") VALUES('Smoked Desert Dumplings');
-INSERT INTO public.item ("name") VALUES('Grilled Squid');
-INSERT INTO public.item ("name") VALUES('Roasted Quail');
-INSERT INTO public.item ("name") VALUES('Candy Cane');
-INSERT INTO public.item ("name") VALUES('Fine Aged Cheddar');
-INSERT INTO public.item ("name") VALUES('Tender Wolf Steak');
-INSERT INTO public.item ("name") VALUES('Cured Ham Steak');
-INSERT INTO public.item ("name") VALUES('Southshore Stout');
-INSERT INTO public.item ("name") VALUES('Shiny Red Apple');
-
--- Rings
-INSERT INTO public.item ("name") VALUES('Mood Ring');
-INSERT INTO public.item ("name") VALUES('Ring of Scorn');
-INSERT INTO public.item ("name") VALUES('Quartz Ring');
-INSERT INTO public.item ("name") VALUES('Meadow Ring');
-INSERT INTO public.item ("name") VALUES('Clay Ring');
-INSERT INTO public.item ("name") VALUES('Blood Ring');
-
--- Amulet
-INSERT INTO public.item ("name") VALUES('Glowing Green Talisman');
-INSERT INTO public.item ("name") VALUES('Crystal Starfire Medallion');
-INSERT INTO public.item ("name") VALUES('Basalt Necklace');
-INSERT INTO public.item ("name") VALUES('Necklace of Harmony');
-INSERT INTO public.item ("name") VALUES('Greenstone Talisman');
-INSERT INTO public.item ("name") VALUES('Marsh Chain');
-
--- Weapon
-INSERT INTO public.item ("name") VALUES('Keen Machete');
-INSERT INTO public.item ("name") VALUES('Fine Scimitar');
-INSERT INTO public.item ("name") VALUES('Dull Blade');
-INSERT INTO public.item ("name") VALUES('Gladius');
-
-INSERT INTO public.item ("name") VALUES('Ashwood Bow');
-INSERT INTO public.item ("name") VALUES('Polished Shortbow');
-INSERT INTO public.item ("name") VALUES('Hunting Bow');
-INSERT INTO public.item ("name") VALUES('Heavy Shortbow');
-INSERT INTO public.item ("name") VALUES('Light Crossbow');
-INSERT INTO public.item ("name") VALUES('Heavy Crossbow');
-INSERT INTO public.item ("name") VALUES('Blackcrow');
-INSERT INTO public.item ("name") VALUES('Steelarrow Crossbow');
-
-INSERT INTO public.item ("name") VALUES('Worn Battleaxe');
-INSERT INTO public.item ("name") VALUES('Large Axe');
-INSERT INTO public.item ("name") VALUES('Battleworn Hammer');
-INSERT INTO public.item ("name") VALUES('Short Staff');
-INSERT INTO public.item ("name") VALUES('Bent Staff');
-
--- Armor
-INSERT INTO public.item ("name") VALUES('Tarnished Chain Vest');
-INSERT INTO public.item ("name") VALUES('Rusted Chain Leggings');
-INSERT INTO public.item ("name") VALUES('Tarnished Chain Belt');
-INSERT INTO public.item ("name") VALUES('Charger''s Bindings');
-INSERT INTO public.item ("name") VALUES('Bloody Chain Boots');
-INSERT INTO public.item ("name") VALUES('Warrior''s Gloves');
-INSERT INTO public.item ("name") VALUES('Infantry Boots');
-INSERT INTO public.item ("name") VALUES('Infantry Leggings');
