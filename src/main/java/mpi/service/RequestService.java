@@ -59,7 +59,16 @@ public class RequestService {
 
     public List<Request> getRequestsByUser() {
         User currentUser = authenticationHelper.getCurrentUser();
-        return requestRepository.getAllByBuyerUserOrSellerUser(currentUser.getId());
+        List<Request> requests = new ArrayList<>();
+        List<Request> allByBuyerUser = requestRepository.getAllByBuyerUser(currentUser);
+        List<Request> allBySellerUser = requestRepository.getAllBySellerUser(currentUser);
+        if (allByBuyerUser != null && !allByBuyerUser.isEmpty()) {
+            requests.addAll(allByBuyerUser);
+        }
+        if (allBySellerUser != null && !allBySellerUser.isEmpty()) {
+            requests.addAll(allBySellerUser);
+        }
+        return requests;
     }
 
     public List<Request> getRequestsByProfession() {

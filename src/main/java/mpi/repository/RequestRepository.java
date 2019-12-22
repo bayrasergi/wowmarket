@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer> {
 
-    @Query(value = "select r from request r where (r.buyer_user_id=:userId or r.seller_user_id=:userId)",
-            nativeQuery = true)
-    List<Request> getAllByBuyerUserOrSellerUser(int userId);
+    List<Request> getAllByBuyerUser(User user);
+
+    List<Request> getAllBySellerUser(User user);
 
     @Query(value = "SELECT r from request r where requested_item_id in (" +
             "select r.requested_item_id from recipe r where profession_id in (" +
