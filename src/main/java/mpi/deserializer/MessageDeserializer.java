@@ -24,6 +24,9 @@ public class MessageDeserializer extends JsonDeserializer<Message> {
     }
 
     public static Message deserialize(JsonNode json) {
+        if (json == null) {
+            return null;
+        }
         Message message = new Message();
         message.setId(getInt(json, "id"));
         message.setText(getString(json, "text"));

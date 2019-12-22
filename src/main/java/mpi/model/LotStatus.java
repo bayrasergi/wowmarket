@@ -1,8 +1,8 @@
 package mpi.model;
 
 public enum LotStatus {
-    AVAILABLE("AVAILABLE"),
-    SELL("SELL");
+    SELLING("SELLING"),
+    SOLD("SOLD");
 
     private String name;
 
@@ -16,10 +16,10 @@ public enum LotStatus {
 
     public static LotStatus getByName(String name) {
         switch (name.toUpperCase()) {
-            case "AVAILABLE":
-                return AVAILABLE;
-            case "SELL":
-                return SELL;
+            case "SELLING":
+                return SELLING;
+            case "SOLD":
+                return SOLD;
             default:
                 return null;
         }

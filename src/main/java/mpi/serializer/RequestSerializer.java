@@ -16,12 +16,15 @@ public class RequestSerializer extends JsonSerializer<Request> {
     }
 
     public static RequestDTO serialize(Request request) {
+        if (request == null) {
+            return null;
+        }
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setId(request.getId());
         requestDTO.setBuyerUser(UserSerializer.serialize(request.getBuyerUser()));
         requestDTO.setSellerUser(UserSerializer.serialize(request.getSellerUser()));
         requestDTO.setCount(request.getCount());
-        requestDTO.setParentRequestId(request.getParentRequest().getId());
+        requestDTO.setParentRequestId(request.getParentRequest() == null ? 0 : request.getParentRequest().getId());
         requestDTO.setRequestedItem(ItemSerializer.serialize(request.getRequestedItem()));
         requestDTO.setStatus(request.getStatus());
         requestDTO.setPrice(request.getPrice());

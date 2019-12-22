@@ -26,12 +26,18 @@ public class RecipeDeserializer extends JsonDeserializer<Recipe> {
     }
 
     public static Recipe deserialize(JsonNode json) {
+        if (json == null) {
+            return null;
+        }
         Recipe recipe = new Recipe();
         recipe.setId(getInt(json, "id"));
         recipe.setCreatedItem(ItemDeserializer.deserialize(get(json, "createdItem")));
         recipe.setRequiredProfession(ProfessionDeserializer.deserialize(get(json, "requiredProfession")));
         List<RecipeItem> recipeItems = new ArrayList<>();
         for (JsonNode requiredItem : json.get("requiredItems")) {
+            if (requiredItem == null || requiredItem.isNull()) {
+                continue;
+            }
             RecipeItem recipeItem = new RecipeItem();
             recipeItem.setItem(new Item());
             recipeItem.getItem().setName(getString(requiredItem, "name"));

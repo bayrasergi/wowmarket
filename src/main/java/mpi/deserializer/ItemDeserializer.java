@@ -19,6 +19,9 @@ public class ItemDeserializer extends JsonDeserializer<Item> {
     }
 
     public static Item deserialize(JsonNode json) {
+        if (json == null) {
+            return null;
+        }
         Item item = new Item();
         item.setId(JsonUtil.getInt(json, "id"));
         item.setName(JsonUtil.getString(json, "name"));

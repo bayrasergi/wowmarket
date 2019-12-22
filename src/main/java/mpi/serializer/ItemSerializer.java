@@ -16,6 +16,9 @@ public class ItemSerializer extends JsonSerializer<Item> {
     }
 
     public static ItemDTO serialize(Item item) {
+        if (item == null) {
+            return null;
+        }
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setId(item.getId());
         itemDTO.setName(item.getName());

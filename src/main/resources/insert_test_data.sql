@@ -247,7 +247,7 @@ INSERT INTO public.item ("name","type") VALUES('Infantry Boots','STANDARD');
 INSERT INTO public.item ("name","type") VALUES('Infantry Leggings','STANDARD');
 
 -- Lots
-INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(40, 2, 12, 24, 'AVAILABLE');
-INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(41, 2, 4, 120, 'AVAILABLE');
-INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(50, 2, 1, 60, 'SELL');
-INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(51, 2, 4, 40, 'SELL');
+INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(40, 2, 12, 24, 'SELLING');
+INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(41, 2, 4, 120, 'SELLING');
+INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(50, 2, 1, 60, 'SOLD');
+INSERT INTO public."lot" (item_id, seller_user_id, "count", price, status) VALUES(51, 2, 4, 40, 'SOLD');

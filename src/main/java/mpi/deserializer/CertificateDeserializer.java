@@ -24,6 +24,9 @@ public class CertificateDeserializer extends JsonDeserializer<Certificate> {
     }
 
     public static Certificate deserialize(JsonNode json){
+        if (json == null) {
+            return null;
+        }
         Certificate certificate = new Certificate();
         certificate.setProfession(new Profession());
         certificate.getProfession().setName(getString(json, "profession"));

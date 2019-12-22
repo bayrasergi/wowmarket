@@ -23,6 +23,9 @@ public class LotDeserializer extends JsonDeserializer<Lot> {
     }
 
     public static Lot deserialize(JsonNode json) {
+        if (json == null) {
+            return null;
+        }
         Lot lot = new Lot();
         lot.setComment(getString(json, "comment"));
         lot.setId(getInt(json, "id"));
@@ -30,6 +33,7 @@ public class LotDeserializer extends JsonDeserializer<Lot> {
         lot.setPrice(getInt(json, "price"));
         lot.setItem(ItemDeserializer.deserialize(get(json, "item")));
         lot.setSellerUser(UserDeserializer.deserialize(get(json, "sellerUser")));
+        lot.setStatus(getString(json, "status"));
         return lot;
     }
 }

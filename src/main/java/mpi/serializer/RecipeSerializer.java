@@ -31,6 +31,9 @@ public class RecipeSerializer extends JsonSerializer<Recipe> {
     }
 
     public static RecipeItemDTO serialize(RecipeItem recipeItem) {
+        if (recipeItem == null) {
+            return null;
+        }
         RecipeItemDTO recipeItemDTO = new RecipeItemDTO();
         recipeItemDTO.setId(recipeItem.getId());
         recipeItemDTO.setCount(recipeItem.getItemsRequired());

@@ -43,38 +43,50 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> editUsers(List<User> edits) {
-        List<User> users = new ArrayList<>();
-        edits.forEach(edit -> {
+    public User editUser(User edit) {
+        User currentUser = authenticationHelper.getCurrentUser();
+        User user;
+        if (edit.getId() <= 0 || edit.getId() == currentUser.getId()) {
+            user = currentUser;
+        } else {
+            authenticationHelper.checkRoles(Role.ADMIN);
             Optional<User> oUser = userRepository.findById(edit.getId());
             if (!oUser.isPresent()) {
-                throw new EntityException(String.format("User with id %d not found!", edit.getId()), HttpStatus.BAD_REQUEST, edits);
+                throw new EntityException(String.format("User with id %d not found!", edit.getId()), HttpStatus.BAD_REQUEST, edit);
             }
-            User user = oUser.get();
-            User currentUser = authenticationHelper.getCurrentUser();
-            if (currentUser.isAdmin() && edit.getLocked() != null) {
+            user = oUser.get();
+            if (edit.getLocked() != null) {
                 user.setLocked(edit.getLocked());
             }
-            if (edit.getPassword() != null && !edit.getPassword().isEmpty()) {
-                user.setPassword(bCryptPasswordEncoder.encode(edit.getPassword()));
-            }
-            if (currentUser.isAdmin() && edit.getRole() != null) {
+            if (edit.getRole() != null) {
                 Role byName = Role.getByName(edit.getRole());
                 if (byName == null) {
-                    throw new EntityException(String.format("Role with name %s isn't exist!", edit.getRole().toUpperCase()), HttpStatus.BAD_REQUEST, edits);
+                    throw new EntityException(String.format("Role with name %s isn't exist!", edit.getRole().toUpperCase()), HttpStatus.BAD_REQUEST, edit);
                 }
                 user.setRole(byName.name());
             }
-            if (edit.getName() != null && !edit.getName().isEmpty()) {
-                user.setName(edit.getName());
+        }
+        if (edit.getPassword() != null && !edit.getPassword().isEmpty()) {
+            user.setPassword(bCryptPasswordEncoder.encode(edit.getPassword()));
+        }
+        if (edit.getName() != null && !edit.getName().isEmpty() && !edit.getName().equals(user.getName())) {
+            user.setName(edit.getName());
+        }
+        if (edit.getUsername() != null && !edit.getUsername().isEmpty()
+                && !edit.getUsername().equals(user.getUsername())) {
+            User firstByUsername = userRepository.findFirstByUsername(edit.getUsername());
+            if (firstByUsername != null) {
+                throw new EntityException(String.format("User with username %s already exist!", edit.getUsername()), HttpStatus.BAD_REQUEST, edit);
             }
-            if (edit.getUsername() != null && !edit.getUsername().isEmpty()) {
-                User firstByUsername = userRepository.findFirstByUsername(edit.getUsername());
-                if (firstByUsername != null) {
-                    throw new EntityException(String.format("User with username %s already exist!", edit.getUsername()), HttpStatus.BAD_REQUEST, edits);
-                }
-                user.setUsername(edit.getUsername());
-            }
+            user.setUsername(edit.getUsername());
+        }
+        return user;
+    }
+
+    public List<User> editUsers(List<User> edits) {
+        List<User> users = new ArrayList<>();
+        edits.forEach(edit -> {
+            User user = editUser(edit);
             users.add(user);
         });
         return users;

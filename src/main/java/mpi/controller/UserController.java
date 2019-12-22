@@ -37,6 +37,19 @@ public class UserController {
         return ResponseEntity.ok(userService.editUsers(users));
     }
 
+    @PutMapping("/self")
+    @ResponseBody
+    public ResponseEntity<User> editUsers(@RequestBody User user) {
+        return ResponseEntity.ok(userService.editUser(user));
+    }
+
+    @PutMapping("/{userId}")
+    @ResponseBody
+    public ResponseEntity<User> editUsers(@PathVariable("userId") int userId, @RequestBody User user) {
+        user.setId(userId);
+        return ResponseEntity.ok(userService.editUser(user));
+    }
+
     @PostMapping("/certificates")
     @ResponseBody
     public ResponseEntity<Certificate> addCertificate(@RequestBody Certificate certificate) {

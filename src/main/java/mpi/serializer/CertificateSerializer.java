@@ -16,6 +16,9 @@ public class CertificateSerializer extends JsonSerializer<Certificate> {
     }
 
     public static CertificateDTO serialize(Certificate certificate) {
+        if (certificate == null) {
+            return null;
+        }
         CertificateDTO certificateDTO = new CertificateDTO();
         certificateDTO.setId(certificate.getId());
         certificateDTO.setUsername(certificate.getUser().getUsername());

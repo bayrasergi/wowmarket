@@ -16,6 +16,9 @@ public class UserSerializer extends JsonSerializer<User> {
     }
 
     public static UserDTO serialize(User user) {
+        if (user == null) {
+            return null;
+        }
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());

@@ -20,6 +20,9 @@ public class UserDeserializer extends JsonDeserializer<User> {
     }
 
     public static User deserialize(JsonNode json) {
+        if (json == null) {
+            return null;
+        }
         User user = new User();
         user.setId(getInt(json, "id"));
         user.setPassword(getString(json, "password"));

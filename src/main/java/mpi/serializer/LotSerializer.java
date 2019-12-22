@@ -16,6 +16,9 @@ public class LotSerializer extends JsonSerializer<Lot> {
     }
 
     public static LotDTO serialize(Lot lot) {
+        if (lot == null) {
+            return null;
+        }
         LotDTO lotDTO = new LotDTO();
         lotDTO.setId(lot.getId());
         lotDTO.setComment(lot.getComment());
@@ -23,6 +26,7 @@ public class LotSerializer extends JsonSerializer<Lot> {
         lotDTO.setItem(ItemSerializer.serialize(lot.getItem()));
         lotDTO.setPrice(lot.getPrice());
         lotDTO.setSellerUser(UserSerializer.serialize(lot.getSellerUser()));
+        lotDTO.setStatus(lot.getStatus());
         return lotDTO;
     }
 }

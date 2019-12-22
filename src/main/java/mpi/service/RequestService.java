@@ -27,29 +27,34 @@ public class RequestService {
     private AuthenticationHelper authenticationHelper;
 
     public Request createRequest(Request request) {
+        Request persist = new Request();
         if (request.getBuyerUser() == null) {
-            request.setBuyerUser(authenticationHelper.getCurrentUser());
+            persist.setBuyerUser(authenticationHelper.getCurrentUser());
         } else {
-            validateAndSetBuyerUser(request);
+            persist.setBuyerUser(request.getBuyerUser());
+            validateAndSetBuyerUser(persist);
         }
-        validateAndSetItem(request);
-        request.setStatus(RequestStatus.CREATED.getStatus());
+        persist.setRequestedItem(request.getRequestedItem());
+        validateAndSetItem(persist);
+        persist.setStatus(RequestStatus.CREATED.getStatus());
+        persist.setPrice(request.getPrice());
         validatePrice(request);
         int prepayment = (int) (request.getPrice() * 0.1);
-        request.setPrepayment(prepayment > 0 ? prepayment : 1);
-        validateCount(request);
+        persist.setPrepayment(prepayment > 0 ? prepayment : 1);
+        persist.setCount(request.getCount());
+        validateCount(persist);
         Request parent = request.getParentRequest();
-        if (parent != null) {
-            if (parent.getId() <= 0) {
-                throw new EntityException("Parent Request id must be greater than 0", HttpStatus.BAD_REQUEST, request);
-            }
+        if (parent != null && parent.getId() > 0) {
             Optional<Request> oParent = requestRepository.findById(parent.getId());
             if (!oParent.isPresent()) {
                 throw new EntityException(String.format("Parent Request with id %d not found!", parent.getId()), HttpStatus.BAD_REQUEST, request);
             }
-            request.setParentRequest(oParent.get());
+            persist.setParentRequest(oParent.get());
+        } else {
+            persist.setParentRequest(null);
         }
-        return requestRepository.save(request);
+        persist = requestRepository.save(persist);
+        return persist;
     }
 
     public List<Request> getRequestsByUser() {

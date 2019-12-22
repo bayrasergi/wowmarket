@@ -19,6 +19,9 @@ public class ProfessionDeserializer extends JsonDeserializer<Profession> {
     }
 
     public static Profession deserialize(JsonNode json) {
+        if (json == null) {
+            return null;
+        }
         Profession profession = new Profession();
         profession.setName(JsonUtil.getString(json, "name"));
         profession.setCraft(JsonUtil.getBoolean(json, "craft"));

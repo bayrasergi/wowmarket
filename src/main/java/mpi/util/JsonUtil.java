@@ -6,7 +6,7 @@ public class JsonUtil {
 
     public static String getString(JsonNode json, String... nodes) {
         json = get(json, nodes);
-        if (json.isNull()) {
+        if (json == null) {
             return null;
         }
         return json.asText();
@@ -14,7 +14,7 @@ public class JsonUtil {
 
     public static int getInt(JsonNode json, String... nodes) {
         json = get(json, nodes);
-        if (json == null || json.isNull()) {
+        if (json == null) {
             return 0;
         }
         return json.asInt();
@@ -22,7 +22,7 @@ public class JsonUtil {
 
     public static long getLong(JsonNode json, String... nodes) {
         json = get(json, nodes);
-        if (json == null || json.isNull()) {
+        if (json == null) {
             return 0;
         }
         return json.asLong();
@@ -30,16 +30,13 @@ public class JsonUtil {
 
     public static Boolean getBoolean(JsonNode json, String... nodes) {
         json = get(json, nodes);
-        if (json == null || json.isNull()) {
+        if (json == null) {
             return false;
         }
         return json.asBoolean();
     }
 
     public static JsonNode get(JsonNode json, String... nodes) {
-        if (json == null || json.isNull()) {
-            return null;
-        }
         for (String node : nodes) {
             json = json.get(node);
             if (json == null) {

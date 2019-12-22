@@ -10,4 +10,5 @@ public class LotDTO {
     private int count;
     private int price;
     private String comment;
+    private String status;
 }

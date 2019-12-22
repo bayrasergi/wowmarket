@@ -16,6 +16,9 @@ public class MessageSerializer extends JsonSerializer<Message> {
     }
 
     public static MessageDTO serialize(Message message) {
+        if (message == null) {
+            return null;
+        }
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setId(message.getId());
         messageDTO.setText(message.getText());

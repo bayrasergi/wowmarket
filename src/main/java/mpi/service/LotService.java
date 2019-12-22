@@ -26,13 +26,14 @@ import static mpi.model.ItemType.*;
 @Transactional
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class LotService {
+
     private LotRepository lotRepository;
     private ItemRepository itemRepository;
     private UserRepository userRepository;
     private AuthenticationHelper authenticationHelper;
 
     public List<Lot> getAllLots() {
-        return lotRepository.findAllByStatus(LotStatus.AVAILABLE.getName());
+        return lotRepository.findAllByStatus(LotStatus.SELLING.getName());
     }
 
     public List<Lot> getLotsByUser() {
@@ -43,7 +44,13 @@ public class LotService {
         lots.forEach(lot -> {
             validateLotItem(lot);
             validateLotSellerUser(lot);
-            lot.setStatus(LotStatus.AVAILABLE.getName());
+            if (lot.getCount() <= 0) {
+                throw new EntityException("Count must be greater than 0!", HttpStatus.BAD_REQUEST, lot);
+            }
+            if (lot.getPrice() <= 0) {
+                throw new EntityException("Price must be greater than 0!", HttpStatus.BAD_REQUEST, lot);
+            }
+            lot.setStatus(LotStatus.SELLING.getName());
         });
         return lotRepository.saveAll(lots);
     }
@@ -79,9 +86,9 @@ public class LotService {
             }
             Lot lot = oLot.get();
             lots.add(lot);
-            if (!lot.getStatus().equals(LotStatus.SELL.getName())) {
-                if (lotEdit.getStatus() != null && lotEdit.getStatus().equals(LotStatus.SELL.getName())) {
-                    lot.setStatus(LotStatus.SELL.getName());
+            if (!lot.getStatus().equals(LotStatus.SOLD.getName())) {
+                if (lotEdit.getStatus() != null && lotEdit.getStatus().equals(LotStatus.SOLD.getName())) {
+                    lot.setStatus(LotStatus.SOLD.getName());
                 } else {
                     if (lotEdit.getCount() > 0) {
                         lot.setCount(lotEdit.getCount());
@@ -127,7 +134,8 @@ public class LotService {
     public void validateLotSellerUser(Lot lot) {
         User sellerUser = lot.getSellerUser();
         if (sellerUser == null) {
-            throw new EntityException("Seller user must not be null!", HttpStatus.BAD_REQUEST, lot);
+            lot.setSellerUser(authenticationHelper.getCurrentUser());
+            return;
         }
         Optional<User> user = userRepository.findById(sellerUser.getId());
         if (user.isPresent()) {

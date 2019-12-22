@@ -16,6 +16,9 @@ public class ProfessionSerializer extends JsonSerializer<Profession> {
     }
 
     public static ProfessionDTO serialize(Profession profession) {
+        if (profession == null) {
+            return null;
+        }
         ProfessionDTO professionDTO = new ProfessionDTO();
         professionDTO.setId(profession.getId());
         professionDTO.setName(profession.getName());

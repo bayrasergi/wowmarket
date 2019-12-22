@@ -5,9 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import mpi.model.Item;
 import mpi.model.Request;
-import mpi.model.User;
 
 import java.io.IOException;
 
@@ -22,6 +20,9 @@ public class RequestDeserializer extends JsonDeserializer<Request> {
     }
 
     public static Request deserialize(JsonNode json) {
+        if (json == null) {
+            return null;
+        }
         Request request = new Request();
         request.setId(getInt(json, "id"));
         request.setStatus(getString(json, "status"));
