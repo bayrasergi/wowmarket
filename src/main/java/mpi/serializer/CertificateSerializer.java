@@ -23,6 +23,7 @@ public class CertificateSerializer extends JsonSerializer<Certificate> {
         certificateDTO.setId(certificate.getId());
         certificateDTO.setUsername(certificate.getUser().getUsername());
         certificateDTO.setProfession(certificate.getProfession().getName());
+        certificateDTO.setLink(certificate.getLink());
         return certificateDTO;
     }
 }

@@ -7,4 +7,5 @@ public class CertificateDTO {
     private int id;
     private String username;
     private String profession;
+    private String link;
 }

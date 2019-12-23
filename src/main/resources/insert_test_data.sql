@@ -23,14 +23,14 @@ INSERT INTO public.profession("name", craft) VALUES('Blacksmithing', true); -- 6
 INSERT INTO public.profession("name", craft) VALUES('Leatherworking', true); -- 7
 
 -- Certificates
-INSERT INTO public.certificate("profession_id", user_id, approved) VALUES(1,6, true);
-INSERT INTO public.certificate("profession_id", user_id, approved) VALUES(2,7, true);
-INSERT INTO public.certificate("profession_id", user_id, approved) VALUES(3,8, true);
-INSERT INTO public.certificate("profession_id", user_id, approved) VALUES(4,9, true);
-INSERT INTO public.certificate("profession_id", user_id, approved) VALUES(5,10, true);
-INSERT INTO public.certificate("profession_id", user_id, approved) VALUES(6,11, true);
-INSERT INTO public.certificate("profession_id", user_id, approved) VALUES(7,12, true);
-INSERT INTO public.certificate("profession_id", user_id, approved) VALUES(1,13, false);
+INSERT INTO public.certificate("profession_id", user_id, approved, link) VALUES(1,6, true, 'www.example.com');
+INSERT INTO public.certificate("profession_id", user_id, approved, link) VALUES(2,7, true, 'www.example.com');
+INSERT INTO public.certificate("profession_id", user_id, approved, link) VALUES(3,8, true, 'www.example.com');
+INSERT INTO public.certificate("profession_id", user_id, approved, link) VALUES(4,9, true, 'www.example.com');
+INSERT INTO public.certificate("profession_id", user_id, approved, link) VALUES(5,10, true, 'www.example.com');
+INSERT INTO public.certificate("profession_id", user_id, approved, link) VALUES(6,11, true, 'www.example.com');
+INSERT INTO public.certificate("profession_id", user_id, approved, link) VALUES(7,12, true, 'www.example.com');
+INSERT INTO public.certificate("profession_id", user_id, approved, link) VALUES(1,13, false, 'www.example.com');
 
 -- Tailoring
 INSERT INTO public.item ("name","type") VALUES('Linen Cloth','STANDARD'); -- 1

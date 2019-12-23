@@ -34,4 +34,7 @@ public class Certificate {
 
     @Column
     private boolean approved;
+
+    @Column
+    private String link;
 }

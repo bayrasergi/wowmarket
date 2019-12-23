@@ -33,6 +33,7 @@ public class CertificateDeserializer extends JsonDeserializer<Certificate> {
         certificate.setUser(new User());
         certificate.getUser().setUsername(getString(json, "username"));
         certificate.setId(getInt(json, "id"));
+        certificate.setLink(getString(json, "link"));
         return certificate;
     }
 }

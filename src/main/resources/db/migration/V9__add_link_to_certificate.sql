@@ -1,0 +1,1 @@
+ALTER TABLE "certificate" ADD COLUMN "link" VARCHAR(300);

@@ -103,7 +103,18 @@ public class LotService {
     }
 
     public List<Lot> getLotsByItemName(String itemName) {
-        return lotRepository.findAllByItem_Name(itemName);
+        List<Lot> byName = lotRepository.findAllByItem_Name(itemName);
+        List<Lot> result = new ArrayList<Lot>();
+
+        for (Lot lot: byName) {
+
+            if (lot.getStatus().equals(LotStatus.SELLING.getName())) {
+
+                result.add(lot);
+            }
+        }
+
+        return result;
     }
 
     public List<Lot> getLotsByItemType(String itemType) {
