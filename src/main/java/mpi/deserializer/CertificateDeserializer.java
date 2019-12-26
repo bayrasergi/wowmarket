@@ -12,8 +12,7 @@ import mpi.util.JsonUtil;
 
 import java.io.IOException;
 
-import static mpi.util.JsonUtil.getInt;
-import static mpi.util.JsonUtil.getString;
+import static mpi.util.JsonUtil.*;
 
 public class CertificateDeserializer extends JsonDeserializer<Certificate> {
     @Override
@@ -30,10 +29,12 @@ public class CertificateDeserializer extends JsonDeserializer<Certificate> {
         Certificate certificate = new Certificate();
         certificate.setProfession(new Profession());
         certificate.getProfession().setName(getString(json, "profession"));
+        certificate.getProfession().setId(getInt(json, "professionId"));
         certificate.setUser(new User());
         certificate.getUser().setUsername(getString(json, "username"));
         certificate.setId(getInt(json, "id"));
         certificate.setLink(getString(json, "link"));
+        certificate.setApproved(getBoolean(json, "approved"));
         return certificate;
     }
 }
