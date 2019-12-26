@@ -23,6 +23,7 @@ public class ItemSerializer extends JsonSerializer<Item> {
         itemDTO.setId(item.getId());
         itemDTO.setName(item.getName());
         itemDTO.setType(item.getType());
+        itemDTO.setDescription(item.getDescription());
         return itemDTO;
     }
 }

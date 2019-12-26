@@ -26,6 +26,7 @@ public class ItemDeserializer extends JsonDeserializer<Item> {
         item.setId(JsonUtil.getInt(json, "id"));
         item.setName(JsonUtil.getString(json, "name"));
         item.setType(JsonUtil.getString(json, "type"));
+        item.setDescription(JsonUtil.getString(json, "description"));
         return item;
     }
 }
