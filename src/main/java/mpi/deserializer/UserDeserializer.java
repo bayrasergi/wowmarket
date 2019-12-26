@@ -25,6 +25,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
         }
         User user = new User();
         user.setId(getInt(json, "id"));
+        user.setName(getString(json, "name"));
         user.setPassword(getString(json, "password"));
         user.setRole(getString(json, "role"));
         user.setUsername(getString(json, "username"));

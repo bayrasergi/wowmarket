@@ -38,7 +38,11 @@ public class UserService {
         validateUsername(user);
         validatePassword(user);
         validateName(user);
-        user.setRole(Role.getByName(user.getRole()).getName());
+        Role role = Role.getByName(user.getRole());
+        if (role == null) {
+            throw new EntityException(String.format("Role %s does not exist!", user.getRole()), HttpStatus.BAD_REQUEST, user);
+        }
+        user.setRole(role.name());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
