@@ -3,10 +3,7 @@ package mpi.service;
 import lombok.AllArgsConstructor;
 import mpi.exception.EntityException;
 import mpi.model.*;
-import mpi.repository.ItemRepository;
-import mpi.repository.RecipeRepository;
-import mpi.repository.RequestRepository;
-import mpi.repository.UserRepository;
+import mpi.repository.*;
 import mpi.util.AuthenticationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +21,7 @@ public class RequestService {
     private RecipeRepository recipeRepository;
     private ItemRepository itemRepository;
     private UserRepository userRepository;
+    private CertificateRepository certificateRepository;
     private AuthenticationHelper authenticationHelper;
 
     public Request createRequest(Request request) {
@@ -37,8 +35,6 @@ public class RequestService {
         persist.setRequestedItem(request.getRequestedItem());
         validateAndSetItem(persist);
         persist.setStatus(RequestStatus.CREATED.getStatus());
-        persist.setPrice(request.getPrice());
-        validatePrice(request);
         int prepayment = (int) (request.getPrice() * 0.1);
         persist.setPrepayment(prepayment > 0 ? prepayment : 1);
         persist.setCount(request.getCount());
@@ -89,6 +85,17 @@ public class RequestService {
             requests.add(request);
             if (requestEdit.getStatus() != null) {
                 RequestStatus status = RequestStatus.getStatusByName(requestEdit.getStatus());
+                List<Certificate> certificates = certificateRepository.findAllByUser(currentUser);
+                if (!currentUser.isAdmin() && certificates.isEmpty()) {
+                    throw new EntityException("User must have at least one profession to be able to take request!", HttpStatus.BAD_REQUEST, edits);
+                }
+                Set<Profession> professions = new HashSet<>();
+                certificates.forEach(c -> professions.add(c.getProfession()));
+                Optional<Recipe> oRecipe = recipeRepository.findFirstByCreatedItem_Id(request.getRequestedItem().getId());
+                if (!oRecipe.isPresent()) {
+                    throw new EntityException(String.format("There is no recipe for %s!", request.getRequestedItem().getName()), HttpStatus.BAD_REQUEST, edits);
+                }
+                Recipe recipe = oRecipe.get();
                 if (status != null) {
                     if (currentUser.isAdmin() && status != RequestStatus.CLOSED && status != RequestStatus.DELIVERED
                             && status != RequestStatus.REJECTED) {
@@ -98,9 +105,8 @@ public class RequestService {
                         List<Request> children = setStatusToChildren(request, status);
                         requests.addAll(children);
                         request.setStatus(status.name());
-                    } else if (request.getSellerUser() == null && status == RequestStatus.ASSIGNED
-                            || request.getSellerUser() != null && (status == RequestStatus.READY
-                            || status == RequestStatus.CREATED)) {
+                    } else if (request.getSellerUser() == null && status == RequestStatus.ASSIGNED && professions.contains(recipe.getRequiredProfession())
+                            || request.getSellerUser() != null && (status == RequestStatus.READY || status == RequestStatus.CREATED)) {
                         if (request.getSellerUser() == null) {
                             request.setSellerUser(currentUser);
                         }
@@ -172,13 +178,19 @@ public class RequestService {
             return null;
         }
         Request request = requestOptional.get();
+        User currentUser = authenticationHelper.getCurrentUser();
+        if (!currentUser.isAdmin() && currentUser.getId() != request.getSellerUser().getId()) {
+            throw new EntityException("User must be seller user", HttpStatus.FORBIDDEN, null);
+        }
+        validatePrice(price);
+        request.setPrice(price);
         request.setStatus(RequestStatus.READY.getStatus());
         for (Request childrenRequest : request.getChildrenRequests()) {
             if (!childrenRequest.getStatus().equals(RequestStatus.CLOSED.getStatus())) {
                 closeRequest(childrenRequest.getId());
             }
         }
-        return requestRepository.save(request);
+        return request;
     }
 
     public Request closeRequest(int requestId) {
@@ -191,11 +203,10 @@ public class RequestService {
             if (childrenRequest.getStatus().equals(RequestStatus.CLOSED.getStatus())) {
                 continue;
             }
-            childrenRequest.setStatus(RequestStatus.CLOSED.getStatus());
+            closeRequest(childrenRequest.getId());
         }
-        requestRepository.saveAll(request.getChildrenRequests());
         request.setStatus(RequestStatus.CLOSED.getStatus());
-        return requestRepository.save(request);
+        return request;
     }
 
     public List<Request> getAllRequests() {
@@ -248,8 +259,12 @@ public class RequestService {
     }
 
     public void validatePrice(Request request) {
-        if (request.getPrice() <= 0) {
-            throw new EntityException("Price must be greater than 0", HttpStatus.BAD_REQUEST, request);
+        validatePrice(request.getPrice());
+    }
+
+    public void validatePrice(int price) {
+        if (price <= 0) {
+            throw new EntityException("Price must be greater than 0", HttpStatus.BAD_REQUEST, price);
         }
     }
 

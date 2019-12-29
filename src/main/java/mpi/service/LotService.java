@@ -66,7 +66,7 @@ public class LotService {
         }
         Lot lot = oLot.get();
         User currentUser = authenticationHelper.getCurrentUser();
-        if (!currentUser.isAdmin() || lot.getSellerUser().getId() != currentUser.getId()) {
+        if (!currentUser.isAdmin() && lot.getSellerUser().getId() != currentUser.getId()) {
             throw new EntityException("Only seller of the lot or Admin can delete this lot!", HttpStatus.BAD_REQUEST, lot);
         }
         lotRepository.delete(lot);
@@ -75,7 +75,7 @@ public class LotService {
 
     public List<Lot> editLots(List<Lot> edits) {
         List<Lot> lots = new ArrayList<>();
-        edits.forEach(lotEdit -> {
+        for (Lot lotEdit : edits) {
             if (lotEdit.getId() <= 0) {
                 throw new EntityException("Edit must contain lot id!", HttpStatus.BAD_REQUEST, edits);
             }
@@ -85,35 +85,37 @@ public class LotService {
                         HttpStatus.BAD_REQUEST, edits);
             }
             Lot lot = oLot.get();
+            if (lot.getStatus().equals(LotStatus.SOLD.name())) {
+                continue;
+            }
             lots.add(lot);
-            if (!lot.getStatus().equals(LotStatus.SOLD.getName())) {
-                if (lotEdit.getStatus() != null && lotEdit.getStatus().equals(LotStatus.SOLD.getName())) {
-                    lot.setStatus(LotStatus.SOLD.getName());
-                } else {
-                    if (lotEdit.getCount() > 0) {
-                        lot.setCount(lotEdit.getCount());
-                    }
-                    if (lotEdit.getPrice() > 0) {
-                        lot.setPrice(lotEdit.getPrice());
-                    }
+            User currentUser = authenticationHelper.getCurrentUser();
+            if (lot.getSellerUser().getId() == currentUser.getId()) {
+                if (lotEdit.getPrice() > 0) {
+                    lot.setPrice(lotEdit.getPrice());
+                }
+                if (lotEdit.getCount() > 0) {
+                    lot.setCount(lotEdit.getCount());
+                }
+                if (lotEdit.getComment() != null) {
+                    lot.setComment(lotEdit.getComment());
                 }
             }
-        });
+            if (lotEdit.getStatus() != null && lotEdit.getStatus().equals(LotStatus.SOLD.getName())) {
+                lot.setStatus(LotStatus.SOLD.getName());
+            }
+        }
         return lots;
     }
 
     public List<Lot> getLotsByItemName(String itemName) {
         List<Lot> byName = lotRepository.findAllByItem_Name(itemName);
-        List<Lot> result = new ArrayList<Lot>();
-
-        for (Lot lot: byName) {
-
+        List<Lot> result = new ArrayList<>();
+        for (Lot lot : byName) {
             if (lot.getStatus().equals(LotStatus.SELLING.getName())) {
-
                 result.add(lot);
             }
         }
-
         return result;
     }
 
