@@ -10,6 +10,7 @@ group 'org.example'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -31,8 +32,11 @@ dependencies {
     compile 'org.postgresql:postgresql:42.2.5'
     compileOnly 'org.projectlombok:lombok:1.18.8'
     annotationProcessor "org.projectlombok:lombok:1.18.8"
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.4.2'
-    testCompile 'org.mockito:mockito-core:2.27.0'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testCompile 'org.hsqldb:hsqldb:2.5.0'
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.4.2')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.4.2')
+    testImplementation 'org.mockito:mockito-core:2.27.0'
+}
+
+test {
+    useJUnitPlatform()
 }
