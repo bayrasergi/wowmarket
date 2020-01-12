@@ -13,8 +13,8 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "message")
-@JsonSerialize(using = MessageSerializer.class)
-@JsonDeserialize(using = MessageDeserializer.class)
+//@JsonSerialize(using = MessageSerializer.class)
+//@JsonDeserialize(using = MessageDeserializer.class)
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

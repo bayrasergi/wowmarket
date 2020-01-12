@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/professions")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ProfessionController {

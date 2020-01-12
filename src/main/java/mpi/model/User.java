@@ -15,8 +15,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "`user`")
-@JsonSerialize(using = UserSerializer.class)
-@JsonDeserialize(using = UserDeserializer.class)
+//@JsonSerialize(using = UserSerializer.class)
+//@JsonDeserialize(using = UserDeserializer.class)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "lot")
-@JsonSerialize(using = LotSerializer.class)
-@JsonDeserialize(using = LotDeserializer.class)
+//@JsonSerialize(using = LotSerializer.class)
+//@JsonDeserialize(using = LotDeserializer.class)
 public class Lot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

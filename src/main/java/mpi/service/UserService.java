@@ -97,7 +97,7 @@ public class UserService {
     }
 
     public List<Certificate> getAllCertificates() {
-        authenticationHelper.checkRoles(Role.ADMIN);
+        //authenticationHelper.checkRoles(Role.ADMIN);
         return certificateRepository.findAll();
     }
 

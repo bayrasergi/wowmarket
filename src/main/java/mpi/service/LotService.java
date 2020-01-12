@@ -33,7 +33,7 @@ public class LotService {
     private AuthenticationHelper authenticationHelper;
 
     public List<Lot> getAllLots() {
-        return lotRepository.findAllByStatus(LotStatus.SELLING.getName());
+        return lotRepository.findAll();
     }
 
     public List<Lot> getLotsByUser() {

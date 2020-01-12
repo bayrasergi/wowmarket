@@ -35,7 +35,7 @@ public class RecipeSerializer extends JsonSerializer<Recipe> {
             return null;
         }
         RecipeItemDTO recipeItemDTO = new RecipeItemDTO();
-        recipeItemDTO.setId(recipeItem.getId());
+        recipeItemDTO.setId(recipeItem.getItem().getId());
         recipeItemDTO.setCount(recipeItem.getItemsRequired());
         recipeItemDTO.setName(recipeItem.getItem().getName());
         return recipeItemDTO;
