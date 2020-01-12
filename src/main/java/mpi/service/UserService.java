@@ -137,7 +137,7 @@ public class UserService {
     public User addCertificate(int userId, String professionName) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (!optionalUser.isPresent()) {
-            return null;
+            throw new EntityException(String.format("User with id %d does not found!", userId), HttpStatus.BAD_REQUEST, null);
         }
         User user = optionalUser.get();
         List<Profession> professions = professionRepository.findAllByName(professionName);
